@@ -28,6 +28,7 @@ def process_excel_data(file_path):
 train_data = process_excel_data('set2_500_patients.xlsx')
 test_data = process_excel_data('set3_500_patients.xlsx')
 
+
 predict_ha = 'heart_attack'
 predict_acc = 'accident'
 
@@ -51,51 +52,39 @@ acc_model = LogisticRegression()
 acc_model.fit(x_train_acc, y_train_acc)
 y_pred_acc = acc_model.predict(x_test_acc)
 
+#accuracy for heart attacks
 accuracy_ha = accuracy_score(y_test_ha, y_pred_ha)
-print(f"Accuracy for Heart Attacks Prediction: {accuracy_ha}")
+print('Accuracy for Heart Attacks Prediction: ' + str(accuracy_ha*100)+'%')
 
 print("Confusion Matrix for Heart Attack Prediction:")
 print(confusion_matrix(y_test_ha, y_pred_ha))
-
 print("Classification Report for Heart Attack Prediction:")
 print(classification_report(y_test_ha, y_pred_ha))
 
+#accuracy for accidents
 accuracy_acc = accuracy_score(y_test_acc, y_pred_acc)
-print(f"Accuracy for Accident Prediction: {accuracy_acc}")
+print('Accuracy for Accident Prediction: '+str(accuracy_acc*100)+'%')
 
 print("Confusion Matrix for Accident Prediction:")
 print(confusion_matrix(y_test_acc, y_pred_acc))
-
 print("Classification Report for Accident Prediction:")
 print(classification_report(y_test_acc, y_pred_acc))
 
 
-# Accuracy for positive heart attack cases
+# Accuracy for positive only cases
 positive_ha_indices = np.where(y_test_ha == True)[0]
 x_test_ha_positive = x_test_ha[positive_ha_indices]
 y_test_ha_positive = y_test_ha[positive_ha_indices]
 y_pred_ha_positive = model_ha.predict(x_test_ha_positive)
 
 accuracy_ha_positive = accuracy_score(y_test_ha_positive, y_pred_ha_positive)
-print(f"Accuracy for positive only Heart Attack Cases: {accuracy_ha_positive}")
+print('Accuracy for positive only Heart Attack Cases: ' + str(accuracy_ha_positive*100)+'%')
 
-#print("Confusion Matrix for Positive Heart Attack Cases:")
-#print(confusion_matrix(y_test_ha_positive, y_pred_ha_positive))
 
-#print("Classification Report for Positive Heart Attack Cases:")
-#print(classification_report(y_test_ha_positive, y_pred_ha_positive))
-
-# Accuracy for positive accident cases
 positive_acc_indices = np.where(y_test_acc == True)[0]
 x_test_acc_positive = x_test_acc[positive_acc_indices]
 y_test_acc_positive = y_test_acc[positive_acc_indices]
 y_pred_acc_positive = acc_model.predict(x_test_acc_positive)
 
 accuracy_acc_positive = accuracy_score(y_test_acc_positive, y_pred_acc_positive)
-print(f"Accuracy for positive only Accident Cases: {accuracy_acc_positive}")
-
-#print("Confusion Matrix for Positive Accident Cases:")
-#print(confusion_matrix(y_test_acc_positive, y_pred_acc_positive))
-
-#print("Classification Report for Positive Accident Cases:")
-#rint(classification_report(y_test_acc_positive, y_pred_acc_positive))
+print('Accuracy for positive only Accident Cases: ' + str(accuracy_acc_positive*100) + '%')
