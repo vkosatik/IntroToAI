@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import os
 import pickle
+from sklearn.model_selection import StratifiedGroupKFold
 
 
 #test different ML models for
@@ -38,7 +39,7 @@ grouped = combined_data.groupby('subject')
 
 subjects = grouped.groups.keys()
 subjects = list(subjects)
-#np.random.shuffle(subjects)
+
 
 num_subjects = len(subjects)
 train_end = int(0.7 * num_subjects)
@@ -77,8 +78,5 @@ print(counter1_ha, counter2_ha, counter3_ha)
 print('Accident distribution:')
 print(counter1_acc, counter2_acc, counter3_acc)
 
-print(841/134327)
-print(166/(238031-134328))
-print(188/(341074-238032))
-
-print((841+166+188)/341074)
+print('ha ratios:', counter1_ha/len(train_data), counter2_ha/len(val_data), counter3_ha/len(test_data))
+print('acc ratios:', counter1_acc/len(train_data), counter2_acc/len(val_data), counter3_acc/len(test_data))
