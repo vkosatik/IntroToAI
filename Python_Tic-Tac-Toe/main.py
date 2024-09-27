@@ -1,9 +1,7 @@
 import random
 import numpy as np
-import timeit
-
+import time
 import psutil
-
 from tic_tac_toe import GameState, PLAYER_1, PLAYER_2
 
 def minimax(game_state, player):
@@ -53,13 +51,17 @@ def best_move(game_state, player):
     return move_to_play
 
 if __name__ == "__main__":
-    start = timeit.timeit()
+
+    start_time = time.perf_counter()
+    process = psutil.Process()
+
+
     player1_wins = 0
     player2_wins = 0
     draws = 0
-    process = psutil.Process()
-    memory_before = process.memory_info().rss/(1024 ** 2)
-    for i in range(100):
+    total_memory_usage = 0
+
+    for i in range(50):
         game_state = GameState()
         num_moves = 0
         current_player = PLAYER_1
@@ -86,11 +88,14 @@ if __name__ == "__main__":
         game_state.print_board()
         print()
 
-    memory_after = process.memory_info().rss/(1024 ** 2)
-    total_memory_usage = memory_after - memory_before
-    end = timeit.timeit()
-    print(f"Time taken: {end - start}")
+        memory_after_each_game = process.memory_info().rss / (1024 ** 2)
+        total_memory_usage += memory_after_each_game
+
+    end_time = time.perf_counter()
+    total_time = end_time - start_time
+
+    print(f"Time taken: {total_time:.2f} seconds")
     print(f"Player 1 wins: {player1_wins}")
     print(f"Player 2 wins: {player2_wins}")
     print(f"Draws: {draws}")
-    print('Total memory used over 100 trials: ', total_memory_usage, 'MB')
+    print(f'Total memory used over 100 trials: {total_memory_usage:.2f} MB')
