@@ -61,7 +61,7 @@ if __name__ == "__main__":
     draws = 0
     total_memory_usage = 0
 
-    for i in range(50):
+    for i in range(100):
         game_state = GameState()
         num_moves = 0
         current_player = PLAYER_1
@@ -89,7 +89,7 @@ if __name__ == "__main__":
         print()
 
         memory_after_each_game = process.memory_info().rss / (1024 ** 2)
-        total_memory_usage += memory_after_each_game
+        total_memory_usage += memory_after_each_game/100
 
     end_time = time.perf_counter()
     total_time = end_time - start_time
